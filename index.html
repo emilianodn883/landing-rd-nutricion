@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>RD Nutrición — Rocío Dryon, Licenciada en Nutrición</title>
+<meta name="description" content="Acompañamiento nutricional personalizado para salud digestiva, nutrición deportiva, sobrepeso y obesidad. Atención presencial y online en Córdoba.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ===== Tokens (cambiá estos colores para ajustar a la marca) ===== */
+:root{
+  --bg:#f6f4ee; --surface:#ffffff; --ink:#14201a; --muted:#55645b; --line:#dde2d6;
+  --primary:#1f5a41; --on-primary:#ffffff; --accent:#c9e265; --on-accent:#14201a;
+  --danger:#b3261e; --soft:#eaf0e2;
+  --hero-bg:#0e2a20; --hero-ink:#f3f6ee; --hero-muted:#b9c9bd;
+  --font-display:"Barlow Condensed","Arial Narrow",Impact,sans-serif;
+  --font-body:"DM Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0c1511; --surface:#14211b; --ink:#eaf0e6; --muted:#9bab9f; --line:#24352c;
+    --primary:#86d9a8; --on-primary:#0c1511; --soft:#182a20; --danger:#ff8a80;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0c1511; --surface:#14211b; --ink:#eaf0e6; --muted:#9bab9f; --line:#24352c;
+  --primary:#86d9a8; --on-primary:#0c1511; --soft:#182a20; --danger:#ff8a80;
+  color-scheme:dark;
+}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 72px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);line-height:1.6;-webkit-font-smoothing:antialiased}
+body.lock{overflow:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+img,svg{max-width:100%}
+a{color:inherit}
+h1,h2,h3{font-family:var(--font-display);text-transform:uppercase;line-height:1.02;margin:0;letter-spacing:.01em}
+h2{font-size:clamp(2rem,6vw,3.2rem);font-weight:800}
+h3{font-size:1.55rem;font-weight:700}
+p{margin:0}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+section{padding:72px 0}
+.eyebrow{display:inline-block;font-weight:700;font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:var(--primary);margin-bottom:12px}
+.lead{color:var(--muted);font-size:1.08rem;max-width:56ch;margin-top:14px}
+
+/* ===== Botones ===== */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:700 .98rem var(--font-body);padding:13px 22px;border-radius:999px;border:2px solid transparent;cursor:pointer;text-decoration:none;transition:transform .15s,opacity .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn-accent{background:var(--accent);color:var(--on-accent)}
+.btn-primary{background:var(--primary);color:var(--on-primary)}
+.btn-ghost{background:transparent;border-color:currentColor}
+.btn-sm{padding:8px 14px;font-size:.88rem}
+.btn-danger{background:transparent;color:var(--danger);border-color:var(--danger)}
+
+/* ===== Navbar ===== */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--font-display);font-weight:800;font-size:1.35rem;text-transform:uppercase;letter-spacing:.02em}
+.mark{width:34px;height:34px;border-radius:10px;background:var(--primary);color:var(--on-primary);display:grid;place-items:center;font-size:1rem}
+.menu{display:flex;align-items:center;gap:22px}
+.menu a:not(.btn){text-decoration:none;font-weight:500;font-size:.95rem;color:var(--muted)}
+.menu a:not(.btn):hover{color:var(--ink)}
+.burger{display:none;background:none;border:1px solid var(--line);color:var(--ink);border-radius:10px;width:42px;height:42px;font-size:1.2rem;cursor:pointer}
+@media (max-width:860px){
+  .burger{display:block}
+  .menu{display:none;position:absolute;left:0;right:0;top:64px;background:var(--bg);border-bottom:1px solid var(--line);flex-direction:column;align-items:stretch;gap:0;padding:8px 20px 18px}
+  .menu.open{display:flex}
+  .menu a:not(.btn){padding:12px 0;border-bottom:1px solid var(--line)}
+  .menu .btn{margin-top:14px}
+}
+
+/* ===== Hero ===== */
+.hero{background:var(--hero-bg);color:var(--hero-ink);position:relative;overflow:hidden;padding:84px 0 96px}
+.hero::before{content:"";position:absolute;width:560px;height:560px;right:-140px;top:-120px;border-radius:50%;background:radial-gradient(circle,rgba(201,226,101,.28),transparent 68%)}
+.hero .wrap{position:relative;display:grid;grid-template-columns:1.2fr .8fr;gap:32px;align-items:center}
+.hero .eyebrow{color:var(--accent)}
+.hero h1{font-size:clamp(2.8rem,9vw,5.6rem);font-weight:800}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p.sub{color:var(--hero-muted);font-size:1.15rem;margin:20px 0 30px;max-width:44ch}
+.hero .cta{display:flex;flex-wrap:wrap;gap:12px}
+.hero .btn-ghost{color:var(--hero-ink)}
+.plate{justify-self:center;width:min(100%,340px);opacity:.95}
+@media (max-width:860px){.hero .wrap{grid-template-columns:1fr}.plate{display:none}.hero{padding:56px 0 64px}}
+
+/* ===== Sobre mí ===== */
+.about{display:grid;grid-template-columns:.8fr 1.2fr;gap:44px;align-items:center}
+.photo{aspect-ratio:4/5;border-radius:28px;background:linear-gradient(160deg,var(--primary),#0e2a20);display:grid;place-items:center;color:var(--accent);font-family:var(--font-display);font-size:6rem;font-weight:800;position:relative;overflow:hidden}
+.photo small{position:absolute;bottom:14px;left:0;right:0;text-align:center;font:500 .72rem var(--font-body);color:rgba(255,255,255,.6);letter-spacing:.05em}
+.about h3{color:var(--primary);font-size:1.2rem;margin-bottom:8px}
+.creds{list-style:none;padding:0;margin:22px 0 26px;display:grid;gap:10px}
+.creds li{display:flex;gap:10px;align-items:flex-start}
+.creds li::before{content:"";flex:none;width:10px;height:10px;margin-top:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px var(--soft)}
+@media (max-width:860px){.about{grid-template-columns:1fr;gap:28px}.photo{max-width:320px}}
+
+/* ===== Servicios ===== */
+.band{background:var(--soft)}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:36px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:28px;display:flex;flex-direction:column;gap:14px}
+.card .ico{width:46px;height:46px;border-radius:14px;background:var(--soft);display:grid;place-items:center;font-size:1.4rem}
+.card p{color:var(--muted);font-size:.97rem}
+.card h4{margin:6px 0 0;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--primary)}
+.chips{display:flex;flex-wrap:wrap;gap:7px;list-style:none;padding:0;margin:0}
+.chips li{background:var(--soft);border-radius:999px;padding:4px 12px;font-size:.84rem}
+.card .btn{margin-top:auto}
+@media (max-width:900px){.cards{grid-template-columns:1fr}}
+
+/* ===== Modalidad ===== */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:36px}
+.step{border-top:3px solid var(--primary);padding-top:16px}
+.step .n{font-family:var(--font-display);font-size:3rem;font-weight:800;color:var(--accent);-webkit-text-stroke:1px var(--primary);line-height:1}
+.step h3{margin:8px 0 8px;font-size:1.35rem}
+.step p{color:var(--muted);font-size:.95rem}
+@media (max-width:900px){.steps{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.steps{grid-template-columns:1fr}}
+
+/* ===== Banner portal ===== */
+.portal-cta{background:var(--hero-bg);color:var(--hero-ink);border-radius:32px;padding:44px;display:grid;grid-template-columns:1.4fr 1fr;gap:28px;align-items:center}
+.portal-cta h2{color:var(--hero-ink)}
+.portal-cta p{color:var(--hero-muted);margin-top:12px}
+.portal-cta .eyebrow{color:var(--accent)}
+.portal-cta ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.portal-cta li{display:flex;gap:10px}
+.portal-cta li::before{content:"✓";color:var(--accent);font-weight:700}
+@media (max-width:860px){.portal-cta{grid-template-columns:1fr;padding:30px 24px}}
+
+/* ===== Testimonios ===== */
+.quote{background:var(--surface);border:1px solid var(--line);border-radius:28px;padding:36px;max-width:760px;margin-top:32px;position:relative}
+.quote::before{content:"“";position:absolute;top:-6px;left:24px;font:800 6rem/1 var(--font-display);color:var(--accent);-webkit-text-stroke:1px var(--primary)}
+.quote p{font-size:1.15rem;margin-top:34px}
+.quote cite{display:block;margin-top:18px;font-style:normal;font-weight:700}
+.quote cite span{display:block;font-weight:400;color:var(--muted);font-size:.9rem}
+
+/* ===== Contacto ===== */
+.contact{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:36px}
+.contact .card h3{font-size:1.35rem}
+.addr{display:grid;gap:6px;margin-top:6px}
+.addr b{display:block}
+@media (max-width:900px){.contact{grid-template-columns:1fr}}
+footer{background:var(--hero-bg);color:var(--hero-muted);padding:40px 0;font-size:.92rem}
+footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center}
+footer b{color:var(--hero-ink);font-family:var(--font-display);font-size:1.3rem;text-transform:uppercase}
+
+/* ===== Portal de pacientes (overlay) ===== */
+.portal{position:fixed;inset:0;z-index:60;background:var(--bg);overflow-y:auto;display:none;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.portal.open{display:block}
+.ptop{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:2}
+.ptop .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:10px}
+.pbody{max-width:880px;margin:0 auto;padding:28px 20px 60px}
+.pbody h2{font-size:clamp(1.8rem,5vw,2.6rem)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:24px;margin-top:20px}
+.login{max-width:440px;margin:6vh auto 0}
+label{display:block;font-weight:700;font-size:.88rem;margin:14px 0 6px}
+input,select,textarea{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--primary);outline-offset:1px}
+textarea{min-height:110px;resize:vertical}
+.err{color:var(--danger);font-weight:500;font-size:.92rem;margin-top:12px;min-height:1.2em}
+.ok{color:var(--primary);font-weight:700;font-size:.92rem;margin-top:12px;min-height:1.2em}
+.demo{margin-top:18px;border:1px dashed var(--line);border-radius:14px;padding:12px 14px;font-size:.88rem;color:var(--muted)}
+.demo summary{cursor:pointer;font-weight:700;color:var(--ink)}
+.demo code{background:var(--soft);padding:1px 6px;border-radius:6px;font-size:.85rem}
+.tabs{display:flex;gap:8px;margin-top:22px;flex-wrap:wrap}
+.tab{border:1.5px solid var(--line);background:transparent;color:var(--ink);border-radius:999px;padding:9px 18px;font:700 .92rem var(--font-body);cursor:pointer}
+.tab[aria-selected="true"]{background:var(--primary);color:var(--on-primary);border-color:var(--primary)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+@media (max-width:560px){.row2{grid-template-columns:1fr}}
+.list{display:grid;gap:12px;margin-top:16px}
+.item{border:1px solid var(--line);border-radius:16px;padding:16px;background:var(--bg)}
+.item h3{font-size:1.25rem;text-transform:none;font-family:var(--font-body);font-weight:700;letter-spacing:0}
+.item .meta{color:var(--muted);font-size:.85rem;margin-top:2px}
+.item .notes{white-space:pre-wrap;margin-top:10px;font-size:.96rem}
+.item .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.item img.pv{display:block;max-width:100%;border-radius:12px;margin-top:12px;border:1px solid var(--line)}
+.empty{text-align:center;color:var(--muted);padding:28px 10px}
+.tag{display:inline-block;background:var(--soft);border-radius:999px;padding:2px 10px;font-size:.78rem;font-weight:700;color:var(--primary);margin-left:6px}
+.note{font-size:.85rem;color:var(--muted);margin-top:10px}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#inicio"><span class="mark">RD</span>RD Nutrición</a>
+    <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false">☰</button>
+    <nav class="menu" id="menu">
+      <a href="#inicio">Inicio</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#modalidad">Modalidad</a>
+      <a href="#testimonios">Testimonios</a>
+      <a href="#contacto">Reservar turno</a>
+      <button class="btn btn-primary btn-sm" data-open-portal type="button">Acceso pacientes</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="inicio">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow">Profesional de la Nutrición</span>
+      <h1>Optimizá tu salud y <em>potenciá tu rendimiento</em></h1>
+      <p class="sub">Una nutrición basada en evidencia para alcanzar tu mejor versión.</p>
+      <div class="cta">
+        <a class="btn btn-accent" href="https://wa.me/5493517719206?text=Hola%2C%20me%20gustar%C3%ADa%20consultar%20por%20una%20atenci%C3%B3n%20nutricional." target="_blank" rel="noopener">Consultar por WhatsApp</a>
+        <button class="btn btn-ghost" data-open-portal type="button">Ya soy paciente · Ingresar</button>
+      </div>
+    </div>
+    <svg class="plate" viewBox="0 0 320 320" aria-hidden="true">
+      <circle cx="160" cy="160" r="150" fill="none" stroke="#c9e265" stroke-opacity=".35" stroke-width="2"/>
+      <circle cx="160" cy="160" r="118" fill="#173d2f"/>
+      <circle cx="160" cy="160" r="92" fill="none" stroke="#c9e265" stroke-opacity=".5" stroke-width="2" stroke-dasharray="3 9"/>
+      <path d="M160 215c-38-8-58-40-52-84 40 2 66 26 52 84z" fill="#c9e265"/>
+      <path d="M160 215c4-30 14-52 34-70" stroke="#0e2a20" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <circle cx="222" cy="112" r="16" fill="#e9895b"/>
+      <circle cx="104" cy="214" r="13" fill="#f3f6ee" fill-opacity=".9"/>
+    </svg>
+  </div>
+</section>
+
+<section id="quien-soy">
+  <div class="wrap about">
+    <div class="photo">RD<small>Reemplazar por foto profesional</small></div>
+    <div>
+      <span class="eyebrow">Mtr. Rocio Agustina Dryon</span>
+      <h2>Nutrición, deporte y salud</h2>
+      <p class="lead">Profesional especializada en el abordaje integral de la alimentación y del estilo de vida, a partir de una alimentación real y hábitos sostenibles. Resultados a partir de profesionalismo y experiencia en consultorio.</p>
+      <ul class="creds">
+        <li>Licenciada en Nutrición — UNC</li>
+        <li>Máster en actividad física y deporte</li>
+        <li>Antropometrista ISAK 2</li>
+        <li>Postgrado en tratamiento integral de la obesidad</li>
+        <li>Especialista en Salud Digestiva</li>
+      </ul>
+      <a class="btn btn-primary" href="https://wa.me/5493517719206?text=Hola%2C%20me%20gustar%C3%ADa%20consultar%20por%20una%20atenci%C3%B3n%20nutricional." target="_blank" rel="noopener">Consultar por WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="servicios">
+  <div class="wrap">
+    <span class="eyebrow">Servicios</span>
+    <h2>Nutrición personalizada</h2>
+    <p class="lead">Cada plan se adapta a tu objetivo, tu historia, tu rutina y tus necesidades.</p>
+    <div class="cards">
+      <article class="card" id="salud-digestiva">
+        <div class="ico" aria-hidden="true">🌿</div>
+        <h3>Salud digestiva</h3>
+        <p>Acompañamiento nutricional para mejorar síntomas digestivos, identificar hábitos que puedan estar afectando tu bienestar y construir una alimentación más cómoda, saludable y sostenible.</p>
+        <h4>Ideal para</h4>
+        <ul class="chips"><li>Hinchazón</li><li>Malestar digestivo</li><li>Intolerancias</li><li>Cambios de hábitos</li><li>Intestino irritable</li><li>SIBO / IMO / SIFO</li></ul>
+        <a class="btn btn-ghost btn-sm" href="https://wa.me/5493517719206?text=Hola%2C%20me%20gustar%C3%ADa%20consultar%20por%20el%20servicio%20de%20Salud%20Digestiva." target="_blank" rel="noopener">Consultar</a>
+      </article>
+      <article class="card" id="nutricion-deportiva">
+        <div class="ico" aria-hidden="true">🏃</div>
+        <h3>Nutrición deportiva</h3>
+        <p>Planificación nutricional para mejorar el rendimiento, la recuperación, la composición corporal y la energía durante entrenamientos o competencias.</p>
+        <h4>Ideal para</h4>
+        <ul class="chips"><li>Deportistas amateurs o competitivos</li><li>Gimnasio</li><li>Running</li><li>Deportes de equipo</li><li>Masa muscular</li><li>Recomposición corporal</li></ul>
+        <a class="btn btn-ghost btn-sm" href="https://wa.me/5493517719206?text=Hola%2C%20me%20gustar%C3%ADa%20consultar%20por%20el%20servicio%20de%20Nutrici%C3%B3n%20Deportiva." target="_blank" rel="noopener">Consultar</a>
+      </article>
+      <article class="card" id="sobrepeso-obesidad">
+        <div class="ico" aria-hidden="true">⚖️</div>
+        <h3>Sobrepeso y obesidad</h3>
+        <p>Abordaje integral para mejorar hábitos, salud metabólica y relación con la comida, buscando cambios sostenibles en el tiempo sin soluciones extremas.</p>
+        <h4>Ideal para</h4>
+        <ul class="chips"><li>Descenso de peso</li><li>Mejora de hábitos</li><li>Educación alimentaria</li><li>Cambios sostenibles</li><li>Acompañamiento profesional</li></ul>
+        <a class="btn btn-ghost btn-sm" href="https://wa.me/5493517719206?text=Hola%2C%20me%20gustar%C3%ADa%20consultar%20por%20el%20servicio%20de%20Sobrepeso%20y%20Obesidad." target="_blank" rel="noopener">Consultar</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="modalidad">
+  <div class="wrap">
+    <span class="eyebrow">Modalidad de trabajo</span>
+    <h2>Un proceso claro, acompañado desde el primer encuentro</h2>
+    <div class="steps">
+      <div class="step"><div class="n">01</div><h3>Primera consulta</h3><p>Evaluación inicial, objetivos, historia alimentaria, rutina, salud, actividad física y necesidades particulares.</p></div>
+      <div class="step"><div class="n">02</div><h3>Plan personalizado</h3><p>Diseño de una estrategia nutricional adaptada a tu objetivo, tus horarios, gustos y estilo de vida.</p></div>
+      <div class="step"><div class="n">03</div><h3>Seguimiento</h3><p>Ajustes periódicos según evolución, adherencia, síntomas, rendimiento o cambios necesarios.</p></div>
+      <div class="step"><div class="n">04</div><h3>Educación alimentaria</h3><p>El objetivo no es solo entregar un plan, sino que aprendas a tomar mejores decisiones y sostener hábitos en el tiempo.</p></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="portal-cta">
+      <div>
+        <span class="eyebrow">Portal de pacientes</span>
+        <h2>Tu plan, siempre a mano</h2>
+        <p>Ingresá con tu usuario y consultá tus planes de alimentación actualizados desde el celular, cuando los necesites.</p>
+      </div>
+      <div>
+        <ul>
+          <li>Planes siempre actualizados</li>
+          <li>Historial de planes anteriores</li>
+          <li>Descarga en PDF o imagen</li>
+        </ul>
+        <button class="btn btn-accent" style="margin-top:22px" data-open-portal type="button">Ingresar al portal</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="testimonios">
+  <div class="wrap">
+    <span class="eyebrow">Testimonios</span>
+    <h2>Experiencias de pacientes</h2>
+    <p class="lead">Personas que iniciaron un proceso de cambio con acompañamiento profesional.</p>
+    <figure class="quote" style="margin-inline:0">
+      <p>Estoy transitando mi proceso de cambio de hábitos de manera positiva. Me siento más ágil y con mejor estado físico, mejoré mi capacidad aeróbica.</p>
+      <cite>Camila R.<span>Paciente de nutrición deportiva</span></cite>
+    </figure>
+  </div>
+</section>
+
+<section id="contacto">
+  <div class="wrap">
+    <span class="eyebrow">Contacto</span>
+    <h2>Reservá tu turno</h2>
+    <p class="lead">Podés elegir la forma que te resulte más cómoda para coordinar tu consulta.</p>
+    <div class="contact">
+      <div class="card">
+        <div class="ico" aria-hidden="true">💬</div>
+        <h3>Reservar por WhatsApp</h3>
+        <p>Escribinos directamente para consultar disponibilidad, modalidad de atención o reservar tu turno.</p>
+        <a class="btn btn-primary" href="https://wa.me/5493517719206?text=Hola%2C%20me%20gustar%C3%ADa%20reservar%20un%20turno%20para%20una%20consulta%20nutricional." target="_blank" rel="noopener">Reservar por WhatsApp</a>
+      </div>
+      <div class="card">
+        <div class="ico" aria-hidden="true">📅</div>
+        <h3>Reservar por autogestión</h3>
+        <p>Elegí día, horario y modalidad disponible desde la plataforma de turnos online.</p>
+        <a class="btn btn-primary" href="https://siscon.ar/rociodryon/" target="_blank" rel="noopener">Reservar por autogestión</a>
+      </div>
+      <div class="card">
+        <div class="ico" aria-hidden="true">📍</div>
+        <h3>Modalidades de atención</h3>
+        <ul class="chips"><li>Atención presencial</li><li>Atención online</li></ul>
+        <div class="addr"><span><b>San Jerónimo 167</b>Córdoba</span><span><b>Bedoya 732</b>Córdoba</span></div>
+        <p style="margin-top:4px"><a href="https://www.instagram.com/ro_dryon_nutricion/" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.linkedin.com/in/rocio-agustina-dryon-b2b803127/" target="_blank" rel="noopener">LinkedIn</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><b>RD Nutrición</b><br>Nutrición profesional personalizada para mejorar tu salud, tus hábitos y tu rendimiento.</div>
+    <div>© 2026 RD Nutrición</div>
+  </div>
+</footer>
+
+<!-- ===== Portal de pacientes ===== -->
+<div class="portal" id="portal" role="dialog" aria-modal="true" aria-label="Portal de pacientes">
+  <div class="ptop"><div class="wrap">
+    <span class="brand"><span class="mark">RD</span>Portal</span>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-ghost btn-sm" id="btnLogout" type="button" hidden>Salir</button>
+      <button class="btn btn-ghost btn-sm" id="btnClose" type="button">Cerrar</button>
+    </div>
+  </div></div>
+  <div class="pbody" id="pbody"></div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- utilidades ---------- */
+function h(tag, attrs){
+  var e=document.createElement(tag); attrs=attrs||{};
+  Object.keys(attrs).forEach(function(k){
+    var v=attrs[k];
+    if(k==="class") e.className=v;
+    else if(k.indexOf("on")===0) e.addEventListener(k.slice(2),v);
+    else if(v!==false && v!=null) e.setAttribute(k, v===true?"":v);
+  });
+  for(var i=2;i<arguments.length;i++){
+    [].concat(arguments[i]).forEach(function(c){
+      if(c==null||c===false) return;
+      e.append(c.nodeType?c:document.createTextNode(c));
+    });
+  }
+  return e;
+}
+function uid(){ return "id"+Date.now().toString(36)+Math.random().toString(36).slice(2,8); }
+function fdate(t){ try{ return new Date(t).toLocaleDateString("es-AR",{day:"numeric",month:"long",year:"numeric"}); }catch(e){ return ""; } }
+async function sha(s){
+  try{
+    var b=await crypto.subtle.digest("SHA-256", new TextEncoder().encode("rdn:"+s));
+    return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,"0");}).join("");
+  }catch(e){ return "p:"+s; }
+}
+function dataUrlToBlob(u){
+  var p=u.split(","), mime=(p[0].match(/:(.*?);/)||[])[1]||"application/octet-stream";
+  var bin=atob(p[1]), arr=new Uint8Array(bin.length);
+  for(var i=0;i<bin.length;i++) arr[i]=bin.charCodeAt(i);
+  return new Blob([arr],{type:mime});
+}
+
+/* ---------- capa de datos ----------
+   MODO DEMO: guarda todo en el navegador (localStorage).
+   Para producción, reemplazar los métodos de Store por llamadas
+   a un backend real (Supabase, Firebase, Apps Script + Sheets, etc.)
+   manteniendo las mismas firmas. */
+var LS_KEY="rdn_portal_demo_v1", mem=null;
+function loadDb(){ try{ var r=localStorage.getItem(LS_KEY); if(r) return JSON.parse(r); }catch(e){} return mem; }
+function saveDb(db){ mem=db; try{ localStorage.setItem(LS_KEY, JSON.stringify(db)); return true; }catch(e){ return false; } }
+
+var Store={
+  db:null,
+  async init(){
+    var db=loadDb();
+    if(!db){
+      db={ pro:{ email:"profesional@rdnutricion.demo", name:"Rocío Dryon", hash:await sha("rocio2026") }, patients:[], plans:[] };
+      var pid=uid();
+      db.patients.push({ id:pid, name:"Paciente de ejemplo", email:"paciente@demo.com", hash:await sha("paciente123"), createdAt:Date.now() });
+      db.plans.push({ id:uid(), patientId:pid, title:"Plan semanal de ejemplo", createdAt:Date.now(), file:null,
+        notes:"Desayuno: infusión + tostadas integrales con queso untable y fruta.\nAlmuerzo: proteína magra + vegetales de estación + porción de cereal.\nMerienda: yogur natural con frutos secos.\nCena: tortilla de verduras + ensalada.\n\n(Este es un plan de muestra para probar el portal.)" });
+      saveDb(db);
+    }
+    this.db=db;
+  },
+  async login(email,pass){
+    email=(email||"").trim().toLowerCase(); var hh=await sha(pass||"");
+    if(email===this.db.pro.email.toLowerCase() && hh===this.db.pro.hash) return {role:"pro", id:"pro", name:this.db.pro.name};
+    var p=this.db.patients.find(function(x){return x.email.toLowerCase()===email && x.hash===hh;});
+    return p ? {role:"patient", id:p.id, name:p.name} : null;
+  },
+  patients(){ return this.db.patients.slice().sort(function(a,b){return a.name.localeCompare(b.name);}); },
+  async createPatient(name,email,pass){
+    email=email.trim().toLowerCase();
+    if(this.db.patients.some(function(p){return p.email.toLowerCase()===email;}) || email===this.db.pro.email.toLowerCase()) return {error:"Ya existe un usuario con ese email."};
+    this.db.patients.push({ id:uid(), name:name.trim(), email:email, hash:await sha(pass), createdAt:Date.now() });
+    saveDb(this.db); return {ok:true};
+  },
+  deletePatient(id){
+    this.db.patients=this.db.patients.filter(function(p){return p.id!==id;});
+    this.db.plans=this.db.plans.filter(function(p){return p.patientId!==id;});
+    saveDb(this.db);
+  },
+  plans(patientId){
+    return this.db.plans.filter(function(p){return !patientId||p.patientId===patientId;}).sort(function(a,b){return b.createdAt-a.createdAt;});
+  },
+  addPlan(plan){
+    this.db.plans.push(plan);
+    if(!saveDb(this.db)){ this.db.plans.pop(); return false; }
+    return true;
+  },
+  deletePlan(id){ this.db.plans=this.db.plans.filter(function(p){return p.id!==id;}); saveDb(this.db); },
+  patientName(id){ var p=this.db.patients.find(function(x){return x.id===id;}); return p?p.name:"(eliminado)"; }
+};
+
+/* ---------- sesión ---------- */
+var session=null, tab="plans";
+try{ var s=sessionStorage.getItem("rdn_sess"); if(s) session=JSON.parse(s); }catch(e){}
+function setSession(s){ session=s; try{ s?sessionStorage.setItem("rdn_sess",JSON.stringify(s)):sessionStorage.removeItem("rdn_sess"); }catch(e){} }
+
+/* ---------- descargas ---------- */
+async function downloadFile(file){
+  var dl=null; try{ dl=await window.claude.use("downloads"); }catch(e){}
+  if(!dl){
+    /* fuera de claude.ai: descarga estándar del navegador */
+    var url=URL.createObjectURL(dataUrlToBlob(file.data)), a=h("a",{href:url,download:file.name});
+    document.body.append(a); a.click(); a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(url); },1000);
+    return;
+  }
+  try{ await dl.save({ filename:file.name, data:dataUrlToBlob(file.data) }); }catch(e){ if(e && e.code!=="declined") alert("No se pudo guardar el archivo."); }
+}
+
+/* ---------- render del portal ---------- */
+var $body=document.getElementById("pbody"), $portal=document.getElementById("portal"), $logout=document.getElementById("btnLogout");
+
+function render(){
+  $body.replaceChildren();
+  $logout.hidden=!session;
+  if(!session) return renderLogin();
+  if(session.role==="pro") renderPro(); else renderPatient();
+}
+
+function renderLogin(){
+  var err=h("div",{class:"err",role:"alert"});
+  var email=h("input",{type:"email",id:"lemail",autocomplete:"username",required:true,placeholder:"tu@email.com"});
+  var pass=h("input",{type:"password",id:"lpass",autocomplete:"current-password",required:true,placeholder:"••••••••"});
+  var btn=h("button",{class:"btn btn-primary",type:"button",style:"width:100%;margin-top:18px"},"Ingresar");
+  async function go(){
+    err.textContent=""; btn.disabled=true;
+    var u=await Store.login(email.value,pass.value);
+    btn.disabled=false;
+    if(!u){ err.textContent="Email o contraseña incorrectos."; return; }
+    setSession(u); tab="plans"; render();
+  }
+  btn.addEventListener("click",go);
+  [email,pass].forEach(function(i){ i.addEventListener("keydown",function(e){ if(e.key==="Enter") go(); }); });
+  $body.append(
+    h("div",{class:"login"},
+      h("span",{class:"eyebrow"},"Portal de pacientes"),
+      h("h2",{},"Ingresá a tu cuenta"),
+      h("p",{class:"lead",style:"font-size:1rem"},"Accedé a tus planes de alimentación. Si todavía no tenés usuario, pedíselo a tu nutricionista en la consulta."),
+      h("div",{class:"panel"},
+        h("label",{for:"lemail"},"Email"), email,
+        h("label",{for:"lpass"},"Contraseña"), pass,
+        err, btn),
+      h("details",{class:"demo"},
+        h("summary",{},"Modo demostración"),
+        h("p",{style:"margin-top:8px"},"Profesional: ",h("code",{},"profesional@rdnutricion.demo")," / ",h("code",{},"rocio2026")),
+        h("p",{style:"margin-top:6px"},"Paciente: ",h("code",{},"paciente@demo.com")," / ",h("code",{},"paciente123")),
+        h("p",{style:"margin-top:8px"},"Los datos se guardan solo en este navegador. Para uso real hay que conectar un servidor."))
+    )
+  );
+}
+
+function planCard(p, opts){
+  opts=opts||{};
+  var kids=[
+    h("h3",{},p.title, opts.showPatient? h("span",{class:"tag"},Store.patientName(p.patientId)):null),
+    h("div",{class:"meta"},"Cargado el "+fdate(p.createdAt))
+  ];
+  if(p.notes) kids.push(h("div",{class:"notes"},p.notes));
+  if(p.file && p.file.data.indexOf("data:image/")===0) kids.push(h("img",{class:"pv",src:p.file.data,alt:"Plan: "+p.title}));
+  var acts=h("div",{class:"acts"});
+  if(p.file) acts.append(h("button",{class:"btn btn-primary btn-sm",type:"button",onclick:function(){downloadFile(p.file);}},"Descargar "+(p.file.type==="application/pdf"?"PDF":"archivo")));
+  if(opts.canDelete) acts.append(h("button",{class:"btn btn-danger btn-sm",type:"button",onclick:function(){ if(confirm("¿Eliminar este plan?")){ Store.deletePlan(p.id); render(); } }},"Eliminar"));
+  if(acts.children.length) kids.push(acts);
+  return h("article",{class:"item"},kids);
+}
+
+function renderPatient(){
+  var plans=Store.plans(session.id);
+  $body.append(
+    h("span",{class:"eyebrow"},"Mis planes"),
+    h("h2",{},"Hola, "+session.name.split(" ")[0]),
+    h("p",{class:"lead",style:"font-size:1rem"},"Acá están tus planes de alimentación, del más reciente al más antiguo."),
+    plans.length ? h("div",{class:"list"},plans.map(function(p){return planCard(p);}))
+                 : h("div",{class:"panel empty"},"Todavía no tenés planes cargados. Tu nutricionista los publicará acá después de tu consulta.")
+  );
+}
+
+function renderPro(){
+  var tabs=h("div",{class:"tabs",role:"tablist"},
+    [["plans","Planes"],["patients","Pacientes"]].map(function(t){
+      return h("button",{class:"tab",role:"tab","aria-selected":String(tab===t[0]),type:"button",onclick:function(){tab=t[0];render();}},t[1]);
+    })
+  );
+  $body.append(h("span",{class:"eyebrow"},"Panel profesional"), h("h2",{},"Hola, "+session.name.split(" ")[0]), tabs);
+  if(tab==="patients") proPatients(); else proPlans();
+}
+
+function proPatients(){
+  var msg=h("div",{class:"err",role:"alert"});
+  var n=h("input",{id:"pn",required:true,placeholder:"Nombre y apellido"});
+  var e=h("input",{id:"pe",type:"email",required:true,placeholder:"paciente@email.com"});
+  var pw=h("input",{id:"pp",type:"text",required:true,minlength:"6",placeholder:"Mínimo 6 caracteres",autocomplete:"off"});
+  var btn=h("button",{class:"btn btn-primary",type:"button",style:"margin-top:16px"},"Crear paciente");
+  btn.addEventListener("click",async function(){
+    msg.className="err"; msg.textContent="";
+    if(!n.value.trim()||!e.value.includes("@")||pw.value.length<6){ msg.textContent="Completá nombre, un email válido y una contraseña de 6+ caracteres."; return; }
+    var r=await Store.createPatient(n.value,e.value,pw.value);
+    if(r.error){ msg.textContent=r.error; return; }
+    render();
+  });
+  var ps=Store.patients();
+  $body.append(
+    h("div",{class:"panel"},
+      h("h3",{style:"font-size:1.4rem"},"Nuevo paciente"),
+      h("div",{class:"row2"}, h("div",{},h("label",{for:"pn"},"Nombre"),n), h("div",{},h("label",{for:"pe"},"Email (será su usuario)"),e)),
+      h("label",{for:"pp"},"Contraseña inicial"), pw, msg, btn,
+      h("p",{class:"note"},"Pasale al paciente su email y contraseña para que ingrese desde “Acceso pacientes”.")),
+    h("div",{class:"list"}, ps.length? ps.map(function(p){
+      var count=Store.plans(p.id).length;
+      return h("div",{class:"item"},
+        h("h3",{},p.name),
+        h("div",{class:"meta"},p.email+" · "+count+(count===1?" plan":" planes")),
+        h("div",{class:"acts"},
+          h("button",{class:"btn btn-primary btn-sm",type:"button",onclick:function(){tab="plans";render();document.getElementById("fpat")&&(document.getElementById("fpat").value=p.id);}},"Cargar plan"),
+          h("button",{class:"btn btn-danger btn-sm",type:"button",onclick:function(){ if(confirm("¿Eliminar a "+p.name+" y todos sus planes?")){ Store.deletePatient(p.id); render(); } }},"Eliminar")));
+    }) : h("div",{class:"panel empty"},"Todavía no hay pacientes."))
+  );
+}
+
+function proPlans(){
+  var ps=Store.patients();
+  if(!ps.length){ $body.append(h("div",{class:"panel empty"},"Primero creá un paciente en la pestaña “Pacientes”.")); return; }
+  var msg=h("div",{class:"err",role:"alert"});
+  var sel=h("select",{id:"fpat"}, ps.map(function(p){return h("option",{value:p.id},p.name+" — "+p.email);}));
+  var title=h("input",{id:"ft",placeholder:"Ej.: Plan de definición — semana 1"});
+  var notes=h("textarea",{id:"fn",placeholder:"Indicaciones, comidas, recomendaciones… (opcional si adjuntás un archivo)"});
+  var file=h("input",{id:"ff",type:"file",accept:".pdf,.png,.jpg,.jpeg,.webp,application/pdf,image/*"});
+  var btn=h("button",{class:"btn btn-primary",type:"button",style:"margin-top:16px"},"Publicar plan");
+  btn.addEventListener("click",async function(){
+    msg.className="err"; msg.textContent="";
+    var f=file.files[0];
+    if(!title.value.trim()){ msg.textContent="Poné un título para el plan."; return; }
+    if(!notes.value.trim() && !f){ msg.textContent="Escribí indicaciones o adjuntá un archivo."; return; }
+    if(f && f.size>1200000){ msg.textContent="El archivo supera 1,2 MB en este modo demo. Probá con uno más liviano."; return; }
+    btn.disabled=true;
+    var fileObj=null;
+    if(f){
+      try{
+        fileObj=await new Promise(function(res,rej){ var r=new FileReader(); r.onload=function(){res({name:f.name,type:f.type,data:r.result});}; r.onerror=rej; r.readAsDataURL(f); });
+      }catch(x){ msg.textContent="No se pudo leer el archivo."; btn.disabled=false; return; }
+    }
+    var ok=Store.addPlan({ id:uid(), patientId:sel.value, title:title.value.trim(), notes:notes.value.trim(), file:fileObj, createdAt:Date.now() });
+    btn.disabled=false;
+    if(!ok){ msg.textContent="No hay espacio de almacenamiento en el navegador. Eliminá planes viejos o usá un archivo más chico."; return; }
+    var keep=sel.value; render();
+    var s2=document.getElementById("fpat"); if(s2) s2.value=keep;
+    var m=document.getElementById("fok"); if(m) m.textContent="Plan publicado ✓";
+  });
+  var filter=h("select",{id:"ffil",onchange:function(){ drawList(filter.value); }}, h("option",{value:""},"Todos los pacientes"), ps.map(function(p){return h("option",{value:p.id},p.name);}));
+  var listBox=h("div",{class:"list"});
+  function drawList(pid){
+    listBox.replaceChildren();
+    var pl=Store.plans(pid||null);
+    if(!pl.length) listBox.append(h("div",{class:"panel empty"},"No hay planes cargados."));
+    else pl.forEach(function(p){ listBox.append(planCard(p,{showPatient:true,canDelete:true})); });
+  }
+  drawList("");
+  $body.append(
+    h("div",{class:"panel"},
+      h("h3",{style:"font-size:1.4rem"},"Cargar plan"),
+      h("label",{for:"fpat"},"Paciente"), sel,
+      h("label",{for:"ft"},"Título"), title,
+      h("label",{for:"fn"},"Indicaciones"), notes,
+      h("label",{for:"ff"},"Archivo (PDF o imagen)"), file,
+      h("p",{class:"note"},"Modo demo: hasta 1,2 MB por archivo."),
+      msg, h("div",{class:"ok",id:"fok"}), btn),
+    h("h3",{style:"margin-top:34px"},"Planes cargados"),
+    h("label",{for:"ffil"},"Filtrar"), filter, listBox
+  );
+}
+
+/* ---------- apertura / cierre ---------- */
+function openPortal(){ $portal.classList.add("open"); document.body.classList.add("lock"); $portal.scrollTop=0; render(); }
+function closePortal(){ $portal.classList.remove("open"); document.body.classList.remove("lock"); }
+document.querySelectorAll("[data-open-portal]").forEach(function(b){ b.addEventListener("click",function(){ document.getElementById("menu").classList.remove("open"); openPortal(); }); });
+document.getElementById("btnClose").addEventListener("click",closePortal);
+$logout.addEventListener("click",function(){ setSession(null); render(); });
+document.addEventListener("keydown",function(e){ if(e.key==="Escape") closePortal(); });
+
+/* ---------- menú móvil ---------- */
+var burger=document.getElementById("burger"), menu=document.getElementById("menu");
+burger.addEventListener("click",function(){ var o=menu.classList.toggle("open"); burger.setAttribute("aria-expanded",String(o)); });
+menu.querySelectorAll("a").forEach(function(a){ a.addEventListener("click",function(){ menu.classList.remove("open"); burger.setAttribute("aria-expanded","false"); }); });
+
+Store.init().then(function(){ if(session && session.role==="patient" && !Store.db.patients.some(function(p){return p.id===session.id;})) setSession(null); });
+})();
+</script>
+</body>
+</html>
